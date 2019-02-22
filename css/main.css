@@ -1,0 +1,360 @@
+    html,
+    body
+    {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: auto;
+    }
+
+    body 
+    {
+      background-image: url("../backgrounds/blue-tech-circuit-board.png");
+      padding: 40px 7%;
+      justify-content: center;
+      background-attachment: fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+      /* border: 2px solid red; */
+    }
+
+    body::-webkit-scrollbar
+    { width: 10px; }
+
+    body::-webkit-scrollbar-track
+    {
+      border-radius: 10px;
+      background: #003350;
+    }
+
+    body::-webkit-scrollbar-thumb
+    {
+      background: lightgrey;
+      border-radius: 10px;
+    }
+
+    *
+    {
+      box-sizing: border-box !important;
+      outline: none !important;
+      transition: 0.2s;
+      /* border: 1px solid grey; */
+    }
+
+    h1, h2, h3, h4, h5, h6
+    { margin: 5px 0; }
+
+    label 
+    { 
+      display: block !important;
+      margin: 0 !important;
+    }
+
+    input:disabled,
+    button:disabled
+    { 
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    input:disabled:hover,
+    button:disabled:hover
+    { 
+      box-shadow: none;
+      transform: scale(1.0);
+    }
+
+    a
+    { 
+      padding: 2px 5px;
+      height: auto;
+      display: inline-block;
+      color: orange;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover
+    { 
+      color: #00c0fa !important;
+      text-decoration: underline !important;
+    }
+
+    #custom-container
+    {
+      width: 100%;
+      height: auto;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      transition: 0.8s;
+      /* border: 1px solid green; */
+    }
+
+
+
+
+    /* for navbar - START */
+
+    .fixed-top
+    { z-index: 10; }
+
+    nav
+    {
+      height: 65px;
+      width: 100%;
+      display: flex;
+      align-items: center !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      border-bottom: 1.5px solid rgba(0, 120, 194, 0.6);
+      background: rgba(0, 93, 146, 0.7);
+      transition: 0.35s;
+    }
+
+    nav .icon-toggler-wrapper
+    {
+      display: flex;
+      height: 100%;
+      margin: 0;
+      align-items: center;
+      padding: 0 18px;
+      justify-content: space-between;
+      box-shadow: 0 0 25px #000a12;
+    }
+
+    nav h2
+    { 
+      margin: 0 !important; 
+      font-size: 30px !important; 
+    }
+
+    .header-icon
+    {
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .header-icon:hover
+    { transform: scale(1.075); }
+
+    .navbar-nav .nav-link
+    {
+      background: rgba(0, 60, 94, 0.8);
+      border-radius: 0;
+      color: white;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .navbar-nav .nav-link:hover
+    {
+      background: rgba(0, 37, 58, 0.95);
+      color: #00c0fa;
+    }
+
+    .navbar-toggler
+    {
+      background: #002b50;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      height: 45px;
+      width: 45px;
+      transition: 0.3s;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .navbar-toggler:hover
+    { background-color: rgb(228, 148, 1) !important; }
+
+    .navbar-toggler-icon
+    {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      font-family: none !important;
+      /* border: 1px solid red; */
+    }
+
+    .g-techly-text
+    {
+      font-family: 'Audiowide';
+      color: #02c0fd;
+      letter-spacing: -2px;
+    }
+
+    .g-techly-header
+    {
+      text-shadow: 0 0 20px #001820;
+      font-size: 400%;
+    }
+
+    .g-techly-icon
+    {
+      text-shadow: 0 0 8px #001820;
+      font-size: 26px;
+      display: inline-block;
+    }
+
+    #bg-overlay
+    {
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      transition: 0.3s;
+    }
+
+    /* for navbar - END */
+
+
+
+    #get-started-button:hover
+    { background: orange; }
+
+
+    .footer-text
+    {
+      font-size: 16px;
+      font-weight: normal; 
+      opacity: 0.8;
+      text-shadow: 1px 1px 1.5px black;
+    }
+
+
+
+    /* abstract - START */
+
+    .loader-sm,
+    .loader-m,
+    .loader-l
+    {
+      background-size: cover;
+      border-radius: 50%;
+      display: inline-flex;
+      margin-right: 10px;
+      align-self: center; 
+      background-color: white;
+      opacity: 0.8;
+      color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .loader-rotating-arrows
+    { background-image: url("../loaders/rotating-arrows.gif"); }
+
+    .loader-fading-ovals
+    { background-image: url("../loaders/fading-ovals.gif"); }
+
+    .loader-revolving-balls
+    { background-image: url("../loaders/revolving-balls.gif"); }
+
+    .loader-connected-arrows
+    { background-image: url("../loaders/connected-arrows.gif"); }
+
+    .loader-animated-loading
+    { background-image: url("../loaders/animated_loading.gif"); border: 2px solid white; }
+
+    .loader-sm
+    {
+      width: 22px;
+      height: 22px;
+    }
+
+    .loader-m
+    {
+      width: 44px;
+      height: 44px;
+    }
+
+    .loader-l
+    {
+      width: 88px;
+      height: 88px;
+      display: block;
+    }
+
+    .show
+    {
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .hide
+    {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+    .theme-color-dark
+    { color: #012336; }
+
+    .theme-bg-color-dark
+    { background: #053753; }
+
+    /* abstract - END */
+
+
+    .user-not-signed-in-bg-overlay
+    {
+      background: rgba(0, 0, 0, 0.75);
+      transition: 0.3s;
+    }
+
+    .box-shadow
+    { box-shadow: 0 15px 50px 5px black; }
+
+    .theme-color-changer
+    {
+      height: 45px;
+      width: 45px;
+      background: #02bffd;
+      color: white;
+      font-size: 28px;
+      border-radius: 50%;
+      border: 2px solid white;
+      padding-top: 0;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9;
+    }
+
+    .theme-color-changer:hover
+    { 
+      border-color: #02bffd; 
+      color: #02bffd; 
+      background: white; 
+    }
+
+
+
+    @font-face 
+    {
+      font-family: 'Audiowide';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../google_fonts/audiowide/audiowide-v5-latin-regular.eot'), /* IE9 Compat Modes */
+          url('../google_fonts/audiowide/audiowide-v5-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+          url('../google_fonts/audiowide/audiowide-v5-latin-regular.woff') format('woff'), /* Modern Browsers */
+          url('../google_fonts/audiowide/audiowide-v5-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+          url('../google_fonts/audiowide/audiowide-v5-latin-regular.svg#Audiowide') format('svg'); /* Legacy iOS */
+    }

@@ -1,0 +1,339 @@
+
+    .content
+    {
+      width: 365px;
+      height: auto;
+      box-shadow: 0 30px 130px 15px #000, 0 -3px 10px #001a2b inset;
+      padding: 34px;
+      background: #004170;
+      max-width: 100%;
+      transition: 0.3s;
+      align-self: center;
+      margin: 70px 0;
+      text-align: left;
+      color: lightgrey;
+      /* border: 1px solid yellow; */
+    }
+    
+    .form-header-title
+    {
+      text-align: center;
+      color: lightgrey;
+      padding: 10px 0;
+    }
+
+
+
+    /* image / avatar section - START */
+
+    #image-container
+    {
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      /* border: 1px solid blue; */
+    }
+
+    label#image-label,
+    label#profile-edit-image-label
+    {
+      display: inline-block !important;
+      border-radius: 50%;
+      position: relative;
+      color: white !important;
+      /* border: 1px solid red; */
+    }
+
+    label#image-label:hover #image-upload-guide,
+    label#profile-edit-image-label:hover #profile-edit-image-upload-guide
+    {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #image-upload-guide,
+    #profile-edit-image-upload-guide
+    {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      padding: 15px;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      color: white;
+      background: rgba(0, 13, 22, 0.55);
+      transition: 0.3s;
+      font-size: 95%;
+      cursor: pointer;
+      /* border: 1px solid red; */
+    }
+
+    #camera-icon,
+    #profile-edit-camera-icon
+    {
+      font-size: 250%;
+      font-style: normal;
+    }
+
+    #image,
+    #profile-edit-image
+    {
+      height: 160px;
+      width: 160px;
+      background: gainsboro;
+      margin: auto;
+      border-radius: 50%;
+      border: 2px solid gainsboro;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-image: url("../avatar_blue.png");
+      transition: background 0.3s;
+    }
+
+    #profile-edit-image
+    { border-color: #00bfff; }
+
+    #image-file,
+    #profile-edit-image-file
+    
+    { display: none; }
+
+    #image-container .feedback-wrapper,
+    #profile-image-wrapper .feedback-wrapper
+    { 
+      width: auto !important;
+      margin-top: 7px;
+    }
+
+    /* image / avatar section - END */
+
+
+
+
+    /* inputs section - START */
+
+    .input,
+    .button
+    { 
+      border: none; 
+      font-size: 15px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      transition: 0.3s;
+      line-height: 100% !important;
+    }
+
+    .input
+    {
+      width: 100%;
+      margin: 16px 0 2px 0;
+      padding: 13px;
+      border-radius: 0px 0px 0px 0px !important;
+      display: inline-block;
+      color: white;
+      position: relative;
+      z-index: 2;
+      background: #002e53;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.2s, border 0.3s;
+    }
+
+    .input:hover
+    {
+      background: #00284b;
+      box-shadow: 0 3px 1px #001d30;
+      transform: scale(1.05);
+    }
+
+    .button
+    {
+      color: white;
+      padding: 0 30px;
+      height: 48px;
+      margin: 0;
+      background: #012336;;
+      border-radius: 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .button:hover
+    {
+      background: rgb(0, 173, 0);
+      box-shadow: 0 0 4px 2px #002d55;
+    }
+
+    .button:disabled:hover
+    { background: #012336 !important; }
+
+    .required
+    {
+      border-left: 5px solid red;
+      border-radius: 0 12px 3px 0;
+    }
+
+    .feedback-wrapper
+    {
+      height: 0;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin: 0;
+      overflow: auto;
+      z-index: 1;
+      transition: height 0.35s;
+      /* border: 2px solid yellow; */
+    }
+
+    .feedback
+    {
+      font-style: normal;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 0 0px 0 0; 
+      float: left;
+      width: 100%;
+      max-width: 100%;
+      word-wrap: break-word;
+      flex-wrap: wrap;
+      height: 100%;
+      padding: 0 8px;
+      overflow: hidden;
+      margin: 0;
+      position: relative;
+      line-height: 120%;
+      transition: 0.4s;
+    }
+
+    .feedback::after
+    {
+      content: " ";
+      border-left: 15px solid transparent;
+      border-bottom: 15px solid #004170;
+      border-top: none;
+      border-right: none;
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      transition: 0.3s;
+    }
+
+    .feedback div
+    { 
+      max-height: 100%;  
+      display: inline-flex; 
+      align-items: center;
+      flex-direction: row;
+      /* border: 1px solid red; */
+    }
+
+    .error
+    {
+      color: rgb(161, 0, 0);
+      background: rgb(243, 133, 133);
+      border-left: 5px solid rgb(161, 0, 0);
+    }
+
+    .processing, .user-signed-in-check
+    { 
+      color: rgb(119, 78, 1);
+      background: rgb(252, 192, 80);
+      border-left: 5px solid rgb(141, 92, 0);
+    }
+
+    .success
+    {
+      color: rgb(6, 50, 87);
+      background: rgb(121, 193, 218);
+      border-left: 5px solid rgb(6, 50, 87);
+    }
+
+    /* inputs section - END */
+
+
+
+
+    /* sign up submit button section - START */
+
+    #sign-in-up-wrapper
+    { padding: 10px 0; }
+
+    #sign-in-up-wrapper .span-wrapper
+    { 
+      display: block;
+      padding: 6px 0;
+      font-size: 14px;
+      /* border: 1px solid red; */
+      height: auto;
+    }
+
+    #submit,
+    #signin-button
+	  { width: 100%; }
+
+    /* sign up submit button section - END */
+
+
+
+
+    /* sign up status feedback section - START */
+
+    .signup-status-feedback-wrapper
+    {
+      height: auto;
+      overflow: hidden;
+      margin: 10px 0;
+      width: auto;
+      align-self: center;
+      margin-top: 30px;
+    }
+  
+    .signup-status-feedback-wrapper .feedback
+    {
+      height: auto;
+      width: 100%;
+      overflow: hidden;
+      display: inline-block;
+      padding: 20px;
+      line-height: 150% !important;
+      border-radius: 0;
+    }
+    
+    .signup-status-feedback-wrapper .feedback::after
+    { 
+      border-bottom-color: transparent;
+      transition: 0.3s;
+    }
+
+    .signup-status-feedback-wrapper .feedback span
+    {
+      display: block;
+      padding: 8px 0;
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    #content .signup-status-feedback-wrapper .feedback::after
+    {
+      border-bottom: 16px solid #004170 !important;
+      border-left: 16px solid transparent !important;
+      transition: 0.3s;
+    }
+
+    .feedback-title
+    { 
+      font-size: 20px !important;
+      font-weight: bolder;
+    }
+
+    /* sign up status feedback section - END */
+
+
+    

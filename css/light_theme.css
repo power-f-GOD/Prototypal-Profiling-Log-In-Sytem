@@ -1,0 +1,166 @@
+
+    body
+    { background-image: url('../backgrounds/tech-blue-matrix.jpg'); }
+
+
+
+    /* navbar - START  */
+
+    nav
+    {
+      background: rgba(230, 230, 230, 0.95);
+      border-bottom: 1.5px solid rgba(200, 200, 200, 0.9);
+    }
+
+    .navbar-toggler 
+    { background-color: #009ed3; }
+
+    .navbar-nav .nav-link 
+    {
+      background: rgba(0, 137, 187, 0.82);
+      border-radius: 0;
+      color: gainsboro;
+    }
+
+    .navbar-nav .nav-link:hover
+    { color: gainsboro; }
+
+    /* navbar - END */
+
+
+
+    /* index page - START */
+
+    .g-techly-bold-center
+    { color: #02c0fd !important; }
+
+    #get-started-button
+    { 
+      background: rgb(226, 147, 0); 
+      color: white; 
+    }
+
+    #get-started-button:hover
+    { background: #009ed3; }
+
+    /* index page - END */
+
+
+
+    /* sign in-up - START */
+
+    .content
+    {
+      background: gainsboro;
+      color: #333;
+    }
+
+    .form-header-title
+    { color: #333; }
+
+    .g-techly-icon 
+    { text-shadow: 0 0 2px rgb(143, 224, 255); }
+
+    .g-techly-text 
+    { color: #009ed3; }
+
+    .input
+    {
+      color: #111;
+      background: rgb(190, 190, 190);
+    }
+
+    .input:hover
+    {
+      background: rgb(180, 180, 180);
+      box-shadow: 0 3px 1px rgb(90, 90, 90);
+      transform: scale(1.05);
+    }
+
+    .button
+    { background: #009ed3; }
+
+    .button:hover
+    {
+      background: rgb(0, 173, 0);
+      box-shadow: 0 0 3px 1px rgb(180, 180, 180);
+    }
+
+    .button:disabled:hover
+    { background: #009ed3 !important; }
+
+    .feedback::after
+    { border-bottom: 15px solid gainsboro; }
+
+    /* sign in-up - END */
+
+
+
+    /* profile page - START */
+
+    .profile-detail-item-name,
+    .profile-detail-item-value-wrapper 
+    {
+      background: rgb(190, 190, 190);
+      color: white;
+    }
+
+    .profile-detail-item-value-wrapper 
+    {
+      background: rgb(190, 190, 190);
+      color: #333;
+    }
+
+    .profile-detail-item-name::before 
+    { border-bottom: 10px solid gainsboro; }
+
+    .profile-detail-item-value-wrapper::before 
+    { border-right: 10px solid gainsboro; }
+
+    .profile-detail-item-name::after 
+    { border-left: 10px solid gainsboro; }
+
+    .profile-detail-item-value-wrapper::after
+    { border-bottom: 10px solid gainsboro; }
+
+    .profile-detail-item-name 
+    { border-right: 1px solid #fff; }
+
+    .profile-detail-item-value-wrapper 
+    { border-left: 1px solid #fff; }
+
+    .profile-signup-date,
+    .profile-last-modified-date 
+    { color: rgb(120, 120, 120); }
+
+    #profile-detail-edit-button, 
+    #profile-detail-save-button,
+    #profile-detail-cancel-button 
+    { background: #009ed3; }
+
+    .edit-mode-off:hover
+    { background: rgb(228, 148, 0) !important; }
+
+    /* profile page - END */
+
+    
+
+    .theme-color-changer
+    { 
+      border-color: white; 
+      color: white; 
+      background: #053753; 
+    }
+
+    .theme-color-changer:hover
+    { 
+      border-color: #053753; 
+      color: #053753; 
+      background: white; 
+    }
+
+    .sub-text
+    { color: #333 !important; }
+
+
+
