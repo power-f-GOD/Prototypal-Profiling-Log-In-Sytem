@@ -2,6 +2,9 @@
     body
     { background-image: url('../backgrounds/tech-blue-matrix.jpg'); }
 
+    body::-webkit-scrollbar-track
+    { background: #008ab8; }
+
 
 
     /* navbar - START  */
@@ -9,7 +12,7 @@
     nav
     {
       background: rgba(230, 230, 230, 0.95);
-      border-bottom: 1.5px solid rgba(200, 200, 200, 0.9);
+      border-bottom: 1.5px solid rgb(0, 158, 211, 0.9);
     }
 
     .navbar-toggler 

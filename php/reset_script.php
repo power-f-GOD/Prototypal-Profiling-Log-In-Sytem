@@ -42,7 +42,7 @@
           if ($password_is_successfully_reset)
           {
             //send successful password reset response to client
-            Utils::appendJSONResponse("submit", "", $success, "Your password has been successfully reset. You can now <a href='javascript:void(0)' style='color: blue;' class='js--nav-link reset-signin-link' data-href='ajax_pages/signin_content.php'>sign in</a> with your new password.<br /><br /><br /><b>― G-TECHLY Team</b><br />$password_is_successfully_reset", false);
+            Utils::appendJSONResponse("submit", "", $success, "Your password has been successfully reset. You can now <a href='javascript:void(0)' style='color: blue;' class='js--nav-link reset-signin-link' data-href='ajax_pages/signin_content.php'>sign in</a> with your new password.<br /><br /><br /><b>― G-TECHLY Team</b><br />", false);
           }
           else
             Utils::appendJSONResponse("submit", "", $error, "Invalid URL parameters given for password reset. No such account exists. Click <a href='javascript:void(0)' style='color: blue;' class='js--nav-link reset-signin-link' data-href='ajax_pages/signup_content.php'>here</a> to sign up instead.", false);

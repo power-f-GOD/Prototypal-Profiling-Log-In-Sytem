@@ -90,8 +90,9 @@
                 $DOB_rearranged = explode("-", $value);
                 $_value = $value != "―" ? "$DOB_rearranged[2]-$DOB_rearranged[1]-$DOB_rearranged[0]" : "―";
               }
+
               $refined_prop = str_replace("_", "-", substr_replace($prop, "", strpos($prop, "_"), 1));
-              Utils::appendJSONResponse($refined_prop, ($refined_prop == "DOB" ? $_value : $value), "success", $login_id, false);
+              Utils::appendJSONResponse($refined_prop, ($refined_prop == "DOB" ? $value : $value), "success", $login_id, false);
 
               //store SESSION variables
               //check if value is of DATE or DATETIME
@@ -114,7 +115,7 @@
         }
         else Utils::appendJSONResponse("login-password", "0", $error, "✘ Password incorrect. Enter password again.", false);
       }
-      else Utils::appendJSONResponse("login-id", "", $error, "⚠ Sorry, no account associated with '$login_id'. Sign up instead.", false);
+      else Utils::appendJSONResponse("login-id", "", $error, "⚠ Sorry, no such account exists. Sign up instead.", false);
 
 
       $JSON_responses = (object) $JSON_responses; //convert $JSON_responses array to object before sending to client side

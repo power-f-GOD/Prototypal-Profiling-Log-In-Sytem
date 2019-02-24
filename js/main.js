@@ -16,11 +16,13 @@ const l_arrow = "loader-rotating-arrows",
       l_ovals = "loader-fading-ovals",
       l_balls = "loader-revolving-balls",
       l_connected = "loader-connected-arrows";
- 
+
+
+
 //loader sizes
 let loader_sm = `<span class="loader-sm type">loader</span> `,
     loader_md = `<span><span class="loader-m type">loader</span><br />Loading...</span>`,
-    loader_l = `<span><span class="loader-l type">loader</span><br />Loading...</span>`,
+    loader_lg = `<span><span class="loader-l type">loader</span><br />Loading...</span>`,
     current_loader = "",
 
     //used to display an error message on page-load/request error
@@ -30,14 +32,14 @@ let loader_sm = `<span class="loader-sm type">loader</span> `,
           <h4>{status}</h4> 
           <span>{status_text}</span>
         </div>
-      </div>`;
+      </div>`,
 
-
-let urlParams = new URLSearchParams(window.location.search),
-      USER = urlParams.get('user'),
-      EMAIL = urlParams.get('email'),
-      ID = urlParams.get('u_id'),
-      HASH = urlParams.get('hash');
+    //get url search parameters values
+    urlParams = new URLSearchParams(window.location.search),
+    USER = urlParams.get('user'),
+    EMAIL = urlParams.get('email'),
+    ID = urlParams.get('u_id'),
+    HASH = urlParams.get('hash');
 
 
 
@@ -47,7 +49,7 @@ this.addEventListener("DOMContentLoaded", loadMainScript);
 
 function loadMainScript()
 {
-  //fade-in page on window load
+  //fade-in page and navbar on window load
   setTimeout(() => Q(".navbar").classList.remove("hide"), 1500);
   setTimeout(() => Q("#custom-container").classList.remove("hide"), 500);
 
@@ -63,19 +65,18 @@ function loadMainScript()
 
 
 
-  //this code block is for a case where user opens multiple G-TEC tabs and eventually signs out in one of tabs and also to update changes to profiles if any made on tab switch
+  //this code block is for a case where user opens multiple G-TECHLY tabs and eventually signs out in one of tabs and also to update changes to profiles if any made on tab switch
   window.addEventListener('visibilitychange', function()
   {
     if (document.visibilityState == 'visible')
     {
-      //set previously chosen color theme by user
+      //set previously chosen color theme by user on tab switch (if there be duplicates)
       if (localStorage.getItem('theme-color-href'))
         Q('.theme-color-changer').classList.remove('dark'),
         Q('#theme-color').href = localStorage.getItem('theme-color-href');
       else 
         Q('.theme-color-changer').classList.add('dark'),
         Q('#theme-color').href = '';  
-
 
       if (window.location.pathname.match(/home|profile/))
         Utils.GET(`./php/user_still_signed_in_check.php?user=${USER}&u_id=${ID}`).then
@@ -96,7 +97,7 @@ function loadMainScript()
                 Q('body').onclick = function(e)
                 {
                   if (e.target == this || e.target.classList.contains('user-not-signed-in-bg-overlay'))
-                    window.location = 'http://localhost/g-techly/index';
+                    window.location = 'index';//'http://localhost/g-techly/index';
                 }
               }, 1000);
             }
@@ -106,7 +107,7 @@ function loadMainScript()
               
               setTimeout(() =>
               {
-                //if current tab URL u_id is != to response id, go to signin page
+                //if current tab URL u_id is != to response id, redirect to signin page
                 if (ID != id)
                   window.location.assign(`http://localhost/g-techly/signin?user=0`);
                 else
@@ -133,20 +134,19 @@ function loadMainScript()
   
   //replace history state on page load to avoid pushing duplicate contents to history.state object
   if (/\/index|\/g-techly\/$/.test(window.location.pathname))
-    Utils.replaceStateOnPageLoad('Get Started - G-TEC', 'index', `index`);
+    Utils.replaceStateOnPageLoad('Get Started - G-TECHLY', 'index', `index`);
   else if (window.location.pathname.match('/home'))
-    Utils.replaceStateOnPageLoad('Home - G-TEC', 'home', USER ? `home?user=${USER}&u_id=${ID}` : 'home');
+    Utils.replaceStateOnPageLoad('Home - G-TECHLY', 'home', USER ? `home?user=${USER}&u_id=${ID}` : 'home');
   else if (window.location.pathname.match('/signin'))
-    Utils.replaceStateOnPageLoad('Sign In - G-TEC', 'signin', `signin`);
+    Utils.replaceStateOnPageLoad('Sign In - G-TECHLY', 'signin', `signin`);
   else if (window.location.pathname.match('/signup'))
-    Utils.replaceStateOnPageLoad('Sign Up - G-TEC', 'signup', `signup`);
+    Utils.replaceStateOnPageLoad('Sign Up - G-TECHLY', 'signup', `signup`);
   else if (window.location.pathname.match('/profile'))
-    Utils.replaceStateOnPageLoad('Profile - G-TEC', 'profile', USER ? `profile?user=${USER}&u_id=${ID}` : 'profile');
+    Utils.replaceStateOnPageLoad('Profile - G-TECHLY', 'profile', USER ? `profile?user=${USER}&u_id=${ID}` : 'profile');
   else if (window.location.pathname.match('/iforgot'))
-    Utils.replaceStateOnPageLoad('iForgot Password - G-TEC', 'iforgot', `iforgot`);
+    Utils.replaceStateOnPageLoad('iForgot Password - G-TECHLY', 'iforgot', `iforgot`);
   else if (window.location.pathname.match('/reset'))
-    Utils.replaceStateOnPageLoad('Reset Password - G-TEC', 'reset', EMAIL ? `reset?email=${EMAIL}&hash=${HASH}` : 'reset');
-
+    Utils.replaceStateOnPageLoad('Reset Password - G-TECHLY', 'reset', EMAIL ? `reset?email=${EMAIL}&hash=${HASH}` : 'reset');
 
 
 
@@ -204,7 +204,7 @@ function loadMainScript()
 
 
 
-  //goes to home page on click of G-TEC icon
+  //goes to home page on click of G-TECHLY icon
   Q(".header-icon").addEventListener("click", () => Q(".home-link").click());
 
 
@@ -242,7 +242,6 @@ function loadMainScript()
     Q('.navbar-toggler').style.backgroundImage = `url('${userImage}')`;
   }
     
-
 
 
 

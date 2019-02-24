@@ -8,10 +8,10 @@ function loadSigninPageScript()
 {
   //hide inputs feedback if there be any displayed on input of "login-id or password"
   Q("#login-id").addEventListener("input", function() 
-  { Utils.hideInputFeedback(this); });
+  { Utils.hideAllFeedbacks(); });
 
   Q("#login-password").addEventListener("input", function() 
-  { Utils.hideInputFeedback(this); });
+  { Utils.hideAllFeedbacks(); });
 
   
  
@@ -20,9 +20,7 @@ function loadSigninPageScript()
   //handler to sign user in
   Q("#signin-button").addEventListener("click", function(e) 
   {
-    if (Q('.error') || Q('.processing'))
-      Utils.hideInputFeedback(Q("#login-id")),
-      Utils.hideInputFeedback(Q("#login-id"));
+    Utils.hideAllFeedbacks();
 
     let loginFormData = new FormData(Q("#login-form")),
         signinButton = this;
@@ -31,7 +29,7 @@ function loadSigninPageScript()
     e.preventDefault(); 
     
     if (Q("#login-id").value.trim() == "") //impede signin attempt if login-id is blank
-      return Utils.callInputFeedback(Q("#login-id"), "processing", "⚠ Enter your G-TEC username or email.", Q("#login-id").parentNode);
+      return Utils.callInputFeedback(Q("#login-id"), "processing", "⚠ Enter your G-TECHLY username or email.", Q("#login-id").parentNode);
     else if (Q("#login-id").value.trim().length < 3) //block signin attempt if login-id length is < 3
       return Utils.callInputFeedback(Q("#login-id"), "error", "⚠ Invalid username or email.", Q("#login-id").parentNode);
     else if (Q("#login-password").value == "") //block signin attempt if password is blank
@@ -54,51 +52,59 @@ function loadSigninPageScript()
         //responseText is a JSON stringified object of objects sent from server
         setTimeout(() => 
         {
-          let responses = JSON.parse(responseText), response;
-          
-          for (let prop in responses)
+          try 
           {
-            response = JSON.parse(responses[prop]);
-
-            if (response.name == "signin-button")
-            {
-              let feedbackTitle = response.type == "success" ? "✔ Sign in success!" : "✘ Sign in failed!";
-              Utils.showInputFeedback(Q(`#${response.name}`), response.type, response.message, "", Q("#sign-in-up-wrapper"), feedbackTitle);
-            }
-            else if (response.type == "error")
-              Utils.showInputFeedback(Q(`#${response.name}`), response.type, response.message);
-          }
+            let responses = JSON.parse(responseText), response;
           
-          //check if user is logged in then set sessionStorage accordingly
-          if (responses["signed-in"])
-            if (Number(JSON.parse(responses["signed-in"]).value))
+            for (let prop in responses)
             {
-              Utils.scroll_page_to(Q("body"), Q(".success").offsetTop - 250);
-              setTimeout(() => 
+              response = JSON.parse(responses[prop]);
+  
+              if (response.name == "signin-button")
               {
-                let user = JSON.parse(responses['user-index']).value,
-                    id = JSON.parse(responses['id']).value;
-
-                // update sessionStorage values
-                for (let prop in responses)
-                {
-                  response = JSON.parse(responses[prop]);
-
-                  if (prop == 'image-name')
-                    localStorage.setItem(`u_${user}`, `{"image-name": "${response.value}"}`);
-                  else
-                    sessionStorage.setItem(prop, response.value);
-                }
-
-                window.location = `http://localhost/g-techly/home?user=${user}&u_id=${id}`;
-              }, 1700);
+                let feedbackTitle = response.type == "success" ? "✔ Sign in success!" : "✘ Sign in failed!";
+                Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message, "", Q("#sign-in-up-wrapper"), feedbackTitle);
+              }
+              else if (response.type == "error")
+                Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message);
             }
-          
+            
+            //check if user is logged in then set sessionStorage accordingly
+            if (responses["signed-in"])
+              if (Number(JSON.parse(responses["signed-in"]).value))
+              {
+                Utils.scrollPageTo(Q("body"), Q(".success").offsetTop - 250);
+                setTimeout(() => 
+                {
+                  let user = JSON.parse(responses['user-index']).value,
+                      id = JSON.parse(responses['id']).value;
+  
+                  // update sessionStorage values
+                  for (let prop in responses)
+                  {
+                    response = JSON.parse(responses[prop]);
+  
+                    if (prop == 'image-name')
+                      localStorage.setItem(`u_${user}`, `{"image-name": "${response.value}"}`);
+                    else
+                      sessionStorage.setItem(prop, response.value);
+                  }
+  
+                  window.location = `http://localhost/g-techly/home?user=${user}&u_id=${id}`;
+                }, 1700);
+              }
+          }
+          catch(e)
+          {
+            Utils.callInputFeedback(signinButton, "error", 'An unexpected error occurred! Please, try again later.', Q("#sign-in-up-wrapper"), '⚠ Something Went Wrong!');
+            console.error(responseText);
+          }
+         
           //scroll page to 'error' or 'warning' feedback
           if (Q(".error"))
-            Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250); 
+            Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q(".processing"))
-            Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
           
           signinButton.innerHTML = "Sign In &#10152";
           signinButton.disabled = false;
@@ -109,10 +115,10 @@ function loadSigninPageScript()
       {
         setTimeout(() =>
         {
-          Utils.showInputFeedback(signinButton, "error", `Something went wrong while trying to sign you in. Kindly review your network settings and ensure you are connected to the internet.`,  "", Q("#sign-in-up-wrapper"), "✘ Sign in failed!");
+          Utils.displayInputFeedback(signinButton, "error", `Something went wrong while trying to sign you in. Kindly review your network settings and ensure you are connected to the internet.`,  "", Q("#sign-in-up-wrapper"), "✘ Sign in failed!");
           signinButton.disabled = false;
           signinButton.innerHTML = "Sign In &#10152;";
-          Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         }, 500);
       }
     );

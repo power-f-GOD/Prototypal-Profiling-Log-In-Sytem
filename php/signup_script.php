@@ -37,10 +37,7 @@
         $hash = md5(rand(0, 1000));
         $password = password_hash($password, PASSWORD_BCRYPT);
 
-
-        $user_is_successfully_signed_up = $mysql->query("INSERT INTO _users VALUES (null, '$firstname', '$lastname', '$username', '$email', '$phone', '$DOB', '$password', '$image_path', '$signup_date', '$signup_date', '$signed_in', '$account_active', '$hash');");
-
-        if ($user_is_successfully_signed_up)
+        try
         {
           //send email confirmation link
           $to = $email;
@@ -54,23 +51,20 @@
             <br /><br />
             http://localhost/g-techly/verify?user=$user_index&email=$email&hash=$hash
             <br /><br /><br /><br />
-            G-TECHLY &copy; 2019
-          ";
+            G-TECHLY &copy; 2019";
 
-          try
-          {
-            Utils::Mailer($to, $subject, $message, "$firstname $lastname");
-            //send successful signup response to client
-            Utils::appendJSONResponse("submit", "", $success, "Thank you, <b>$firstname</b>, for signing up. :) <br /><br />A verification link has just been sent to your email. Tap the verification link to activate your account.<br /><br /> Thanks.<br /><br /><br /><b>― G-TECHLY Team</b>", false);
-          } 
-          catch (Exception $e) 
-          {
-            //send failure response to client
-            Utils::appendJSONResponse("submit", "", $error, "Verification link could not be sent. Please try again later.", false);
-          }
+          Utils::Mailer($to, $subject, $message, "$firstname $lastname");
+
+          $mysql->query("INSERT INTO _users VALUES (null, '$firstname', '$lastname', '$username', '$email', '$phone', '$DOB', '$password', '$image_path', '$signup_date', '$signup_date', '$signed_in', '$account_active', '$hash');");
+
+          //send successful signup response to client
+          Utils::appendJSONResponse("submit", "", $success, "Thank you, <b>$firstname</b>, for signing up. :) <br /><br />A verification link has just been sent to your email. Tap the verification link to activate your account.<br /><br /> Thanks.<br /><br /><br /><b>― G-TECHLY Team</b>", false);
+        } 
+        catch (Exception $e) 
+        {
+          //send failure response to client
+          Utils::appendJSONResponse("submit", "", $error, "An unexpected error occurred! Verification link could not be sent. Please try signing up again later.", false);
         }
-        else
-          Utils::appendJSONResponse("submit", "", $error, "⚠ Error: " . $mysql->error, false);
       }
     }
   

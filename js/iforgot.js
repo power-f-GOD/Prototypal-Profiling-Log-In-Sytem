@@ -60,27 +60,27 @@ function loadiForgotPageScript()
               if (response.name == "send-link-button")
               {
                 let feedbackTitle = response.type == "success" ? "✔ Confirmation Link sent!" : "✘ Could not send Link!";
-                Utils.showInputFeedback(Q(`#${response.name}`), response.type, response.message, "", Q("#sign-in-up-wrapper"), feedbackTitle);
+                Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message, "", Q("#sign-in-up-wrapper"), feedbackTitle);
 
                 if (response.type == "success") Q("#iforgot-link-form").reset();
               }
               else if (response.type == "error")
-                Utils.showInputFeedback(Q(`#${response.name}`), response.type, response.message);
+                Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message);
             }
           }
           catch(e)
           {
-            Utils.showInputFeedback(Q(`#send-link-button`), 'error', 'Could not send link. Something went wrong. Please, try again later.', "", Q("#sign-in-up-wrapper"), '⚠ An Unexpected Error Occurred!');
+            Utils.displayInputFeedback(Q(`#send-link-button`), 'error', 'Could not send link. Something went wrong. Please, try again later.', "", Q("#sign-in-up-wrapper"), '⚠ An Unexpected Error Occurred!');
             console.error(responseText);
           }
           
           //scroll form to first input that has feedback type "error" or "warning" that needs to be attended to, filled or filled correctly
           if (Q(".error"))
-            Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250); 
+            Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q("processing"))
-            Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
           else if (Q(".success"))
-            Utils.scroll_page_to(Q("body"), Q(".success").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".success").offsetTop - 250);
 
           sendLinkButton.innerHTML = "Send Link &#10152";
           sendLinkButton.disabled = false;
@@ -91,10 +91,10 @@ function loadiForgotPageScript()
       {
         setTimeout(() =>
         {
-          Utils.showInputFeedback(sendLinkButton, "error", `Something went wrong while trying to send the Confirmation Link to your email. Kindly review your network settings and ensure you are connected to the internet.`,  "", Q("#sign-in-up-wrapper"), "✘ Network Error!");
+          Utils.displayInputFeedback(sendLinkButton, "error", `Something went wrong while trying to send the Confirmation Link to your email. Kindly review your network settings and ensure you are connected to the internet.`,  "", Q("#sign-in-up-wrapper"), "✘ Network Error!");
           sendLinkButton.disabled = false;
           sendLinkButton.innerHTML = "Send Link &#10152;";
-          Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         }, 500);
       }
     );

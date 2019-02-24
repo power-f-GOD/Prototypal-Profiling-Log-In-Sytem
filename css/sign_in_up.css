@@ -209,7 +209,7 @@
       margin: 0;
       position: relative;
       line-height: 120%;
-      transition: 0.4s;
+      transition: 0.4s, color 0s;
     }
 
     .feedback::after
@@ -270,8 +270,8 @@
       display: block;
       padding: 6px 0;
       font-size: 14px;
-      /* border: 1px solid red; */
       height: auto;
+      /* border: 1px solid red; */
     }
 
     #submit,

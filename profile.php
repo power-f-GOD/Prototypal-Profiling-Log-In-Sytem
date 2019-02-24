@@ -15,7 +15,7 @@
   $id = $_SESSION['u_0']['id'];
 
 
-  //redirect to default user ($user_index = 0) if no search params exist in input URL
+  //redirect to default user ($user_index = 0) profile if no search params exist in URL
   if (!array_key_exists('user', $_GET))
     header("Location: http://localhost/g-techly/profile?user=0&u_id=$id");
   
@@ -43,7 +43,7 @@
   $dob = $_SESSION["u_$user_index"]['DOB'];
   $signup_date = $_SESSION["u_$user_index"]['signup-date'];
   $last_modified_date = $_SESSION["u_$user_index"]['last-modified-date'];
-  $account_active = $_SESSION["u_$user_index"]['account-active'];
+  $account_is_active = $_SESSION["u_$user_index"]['account-active'];
   $hash = $_SESSION["u_$user_index"]['hash'];
 
 
@@ -196,10 +196,10 @@
     </div>";
 
 
-  if ($account_active != 1)
-    echo $account_inactive_content;
-  else
+  if ($account_is_active)
     echo $profile_content;
+  else
+    echo $account_inactive_content;
 
 
   require "php/footer.php";

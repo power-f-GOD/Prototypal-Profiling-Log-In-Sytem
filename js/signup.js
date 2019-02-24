@@ -21,7 +21,7 @@ function loadSignupPageScript()
         setTimeout(() => Q("#image").style.backgroundImage = `url("${imgURL}")`, 350);
       else
         Q("#image").style.backgroundImage = "",
-        Utils.showInputFeedback(this.parentNode, "error", "Selected file not an image. Valid image formats: PNG, JPEG, JPG.");
+        Utils.displayInputFeedback(this.parentNode, "error", "Selected file not an image. Valid image formats: PNG, JPEG, JPG.");
     }
   };
 
@@ -59,8 +59,8 @@ function loadSignupPageScript()
     //prevent validation for image file to avoid errors
     if (this.type == "file") return;
 
-    let caller = this;
-    let data = new FormData();
+    let caller = this,
+        data = new FormData();
 
     data.append(caller.name, caller.value);
 
@@ -68,24 +68,21 @@ function loadSignupPageScript()
     if (caller.name == "confirm-password")
       data.append(Q("#password").name, Q("#password").value);
 
-    //check if user "password" is validated in order to enable "confirm-password" input element
-    if (caller.name == "password" && caller.value)
-    {
-      //check if there is an "error" or "warning" feedback displayed which signifies that password is not accepted then disable "confirm-password" input
-      if (caller.parentNode.querySelector(".error") || caller.parentNode.querySelector(".processing"))
-        Q("#confirm-password").disabled = true;
-      else Q("#confirm-password").disabled = false;
-    }
+    //check if user "password" input length is > 7 in order to enable "confirm-password"
+    if (caller.name == "password")
+      if (caller.value.length > 7)
+        Q("#confirm-password").disabled = false;
+      else Q("#confirm-password").disabled = true;
     
     //display "Validating" feedback message before sending user data
-    let feedbackText = caller.name == "confirm-password" ? "Confirming your password..." : `Validating your ${caller.name}...`;
-    let current_loader = loader_sm.replace("type", `${l_arrow}`);
-    let callerParent = caller.name == "submit" ? Q("#sign-in-up-wrapper") : caller.parentNode;
+    let feedbackText = caller.name == "confirm-password" ? "Confirming your password..." : `Validating your ${caller.name}...`,
+        current_loader = loader_sm.replace("type", `${l_arrow}`),
+        callerParent = caller.name == "submit" ? Q("#sign-in-up-wrapper") : caller.parentNode;
 
     if (callerParent.querySelector(".feedback-wrapper"))
       Utils.changeFeedbackType(caller, "processing", `${current_loader} ${feedbackText}`); 
     else
-      Utils.showInputFeedback(caller, "processing", `${current_loader} ${feedbackText}`);
+      Utils.displayInputFeedback(caller, "processing", `${current_loader} ${feedbackText}`);
 
     //Finally POST input data to server for validation (POST() returns a Promise which has two callbacks passed to its "then()" method: resolve and reject)
     Utils.POST(data, "./php/signup_script.php").then
@@ -159,7 +156,7 @@ function loadSignupPageScript()
       function(responseText)
       {
         setTimeout(() => 
-        {
+        {console.log(responseText)
           //responseText is a JSON stringified object of objects sent from the server
           let responses = "", response,
               virtual_caller = caller,
@@ -186,7 +183,7 @@ function loadSignupPageScript()
                 let callerParent = name == "submit" ? Q("#sign-in-up-wrapper") : (virtual_caller.type == 'file' ? virtual_caller.parentNode.parentNode : virtual_caller.parentNode);
                 
                 if (response.type == "error")
-                  Utils.callInputFeedback(virtual_caller, "error", response.message, callerParent);
+                  Utils.callInputFeedback(virtual_caller, "error", response.message, callerParent, name == 'submit' ? '⚠ Something Went Wrong!' : '');
                 else
                   Utils.callInputFeedback(virtual_caller, "processing", response.message, callerParent);
 
@@ -208,7 +205,7 @@ function loadSignupPageScript()
           {
             setTimeout(() => 
             {
-              Utils.showInputFeedback(caller, "success", success_message);
+              Utils.displayInputFeedback(caller, "success", success_message);
               Q("#signup-form").reset();
               Q("#image").style.backgroundImage = "";
 
@@ -216,14 +213,14 @@ function loadSignupPageScript()
                 QAll(".required")[i].style.borderLeft = "5px solid red";
 
               Q("#confirm-password").disabled = true;
-              Utils.scroll_page_to(Q("body"), Q(".signup-status-feedback-wrapper").offsetTop - 250);
+              Utils.scrollPageTo(Q("body"), Q(".signup-status-feedback-wrapper").offsetTop - 250);
             }, 350);
           }
           //scroll form to first input that has feedback type "error" or "warning" that should be attended to, filled or filled correctly
           else if (Q(".error"))
-            Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250); 
+            Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q(".processing"))
-            Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
         
           caller.disabled = false;
           caller.innerHTML = "Sign Up &#11014;";
@@ -234,10 +231,10 @@ function loadSignupPageScript()
       {
         setTimeout(() =>
         {
-          Utils.showInputFeedback(caller, "error", `Something went wrong while trying to sign you up. Kindly review your network settings and ensure you are connected to the internet.`);
+          Utils.displayInputFeedback(caller, "error", `Something went wrong while trying to sign you up. Kindly review your network settings and ensure you are connected to the internet.`);
           caller.disabled = false;
           caller.innerHTML = "Sign Up &#11014;";
-          Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         }, 500);
       }
     );

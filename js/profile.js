@@ -43,7 +43,7 @@ function loadProfilePageScript()
         setTimeout(() => Q("#profile-edit-image").style.backgroundImage = `url("${imgURL}")`, 350);
       else
         Q("#profile-edit-image").style.backgroundImage = "",
-        Utils.showInputFeedback(this.parentNode, "error", "Selected file not an image. Acceptable image formats: PNG, JPEG, JPG.");
+        Utils.displayInputFeedback(this.parentNode, "error", "Selected file not an image. Acceptable image formats: PNG, JPEG, JPG.");
     }
   };
 
@@ -75,7 +75,7 @@ function loadProfilePageScript()
         else if (!currentPassword.value)
         {
           Utils.callInputFeedback(currentPassword.parentNode, 'processing', '⚠ Enter your current password to save changes.', '', '');
-          Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
           setTimeout(() => currentPassword.focus(), 350);
         }
       }
@@ -148,7 +148,7 @@ function loadProfilePageScript()
   {
     e.preventDefault();
 
-    let editedFormData = new FormData();
+    let editFormData = new FormData();
     let profile_edited = false;
 
     //if input value is not equal to current profile value, append input value to form data i.e. a change has been made and needs to be sent to the server
@@ -156,28 +156,28 @@ function loadProfilePageScript()
       if (allProfileInputs[i].type != "password")
         if (allProfileInputs[i].name == "DOB" && allProfileInputs[i].value == sessionStorage.getItem("unformatted-DOB"))
           continue;
-        else if (allProfileInputs[i].value.trim() && allProfileInputs[i].value != sessionStorage.getItem(allProfileInputs[i].name))
-          editedFormData.append(allProfileInputs[i].name, allProfileInputs[i].value);
+        else if (allProfileInputs[i].value.trim() != sessionStorage.getItem(allProfileInputs[i].name))
+          editFormData.append(allProfileInputs[i].name, allProfileInputs[i].value);
     
     //if image is chosen/selected
     if (Q("#profile-edit-image-file").files[0])
-      editedFormData.append(Q("#profile-edit-image-file").name, Q("#profile-edit-image-file").files[0]);
+      editFormData.append(Q("#profile-edit-image-file").name, Q("#profile-edit-image-file").files[0]);
     
-    //if user wishes to change password, append password value to editedFormData
+    //if user wishes to change password, append password value to editFormData
     if (changePassword.value)
       if (confirmChangedPassword.value)
-        editedFormData.append(changePassword.name, changePassword.value),
-        editedFormData.append(confirmChangedPassword.name, confirmChangedPassword.value);
+        editFormData.append(changePassword.name, changePassword.value),
+        editFormData.append(confirmChangedPassword.name, confirmChangedPassword.value);
       else
       {
         disable_save_button();
         Utils.callInputFeedback(confirmChangedPassword.parentNode, "error", "⚠ Your new password has to be confirmed. Also ensure your new password length is not less than 8.", confirmChangedPassword.parentNode.parentNode);
-        Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+        Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         return;
       }
         
     //if form data has values, it implies profile has been edited (or input values have been changed) then flag profile edited true
-    for (let prop of editedFormData.values())
+    for (let prop of editFormData.values())
     {
       profile_edited = true;
       break;
@@ -188,19 +188,19 @@ function loadProfilePageScript()
     {
       Utils.hideAllFeedbacks();
       disable_save_button();
-      Utils.showInputFeedback(saveButton.parentNode, "processing", `⚠ You did not make any edit or change to your profile. Click or tap "Dismiss" to dismiss edit mode.`, "44px");
-      Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+      Utils.displayInputFeedback(saveButton.parentNode, "processing", `⚠ You did not make any edit or change to your profile. Click or tap "Dismiss" to dismiss edit mode.`, "44px");
+      Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
       return;
     }
 
-    editedFormData.append("login-id", sessionStorage.getItem("email"));
-    editedFormData.append(currentPassword.name, currentPassword.value); //append current password to enable saving on server
-    editedFormData.append(this.name, "submit"); //append submit button to be used for processing FormData on server
+    editFormData.append("login-id", sessionStorage.getItem("email"));
+    editFormData.append(currentPassword.name, currentPassword.value); //append current password to enable saving on server
+    editFormData.append(this.name, "submit"); //append submit button to be used for processing FormData on server
     disable_save_button();
     saveButton.innerHTML = `${loader_sm.replace("type", l_arrow)} Saving...`;
 
     //Finally POST edited profile data. (POST() returns a Promise which has two callbacks passed to its "then()" method: resolve and reject)
-    Utils.POST(editedFormData, `./php/edit_profile_script.php?user=${USER}`).then
+    Utils.POST(editFormData, `./php/edit_profile_script.php?user=${USER}`).then
     (
       //POST request resolved
       function(responseText)
@@ -219,25 +219,25 @@ function loadProfilePageScript()
               if (Q(`.profile-detail-input-${prop}`).parentNode.parentNode.querySelector(".feedback"))
                 Utils.changeFeedbackType(Q(`.profile-detail-input-${prop}`).parentNode, response.type, response.message);
               else
-                Utils.showInputFeedback(Q(`.profile-detail-input-${prop}`).parentNode, response.type, response.message);
+                Utils.displayInputFeedback(Q(`.profile-detail-input-${prop}`).parentNode, response.type, response.message);
             if (prop == "image-name")
               Utils.callInputFeedback(Q("#profile-edit-image-label"), response.type, response.message, Q("#profile-edit-image-label").parentNode);
           }
 
           //i.e. if there exists a successful POST datum and any unsuccessful POST datum, all edited profile data will not be saved to database, so throws warning
           if (Q(".success") && (Q(".error") || Q(".processing")))
-            Utils.showInputFeedback(saveButton.parentNode, "processing", `⚠ To update and save accepted profile edit inputs, attend to defaulty input values.`, "44px");
+            Utils.displayInputFeedback(saveButton.parentNode, "processing", `⚠ To update and save accepted profile edit inputs, attend to defaulty input values.`, "44px");
 
           //first scroll page to where an "error" feedback (red background) is found for user to behold and attend to else scrolls page to a "warning" feedback (orange background) else to a "success" feedback (blue background)
           if (Q(".error"))
-            Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250); 
+            Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q(".processing"))
-            Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
           //else no error occurred and edited profile data have been saved, hence, update client side profile data
           else if (Q(".success"))
           {
             Utils.updateClientSideProfile(responses);
-            Utils.scroll_page_to(Q("body"), Q(".success").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".success").offsetTop - 250);
           }
             
           saveButton.innerHTML = "✔ Save";
@@ -250,11 +250,11 @@ function loadProfilePageScript()
         Utils.hideAllFeedbacks();
         setTimeout(() =>
         {
-          Utils.showInputFeedback(saveButton.parentNode, "error", `Something went wrong while trying to update your profile. Kindly review your network settings and ensure you are connected to the internet.`, "60px");
+          Utils.displayInputFeedback(saveButton.parentNode, "error", `Something went wrong while trying to update your profile. Kindly review your network settings and ensure you are connected to the internet.`, "60px");
           disable_save_button();
           disable_current_password();
           saveButton.innerHTML = "Save";
-          Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         }, 500);
       }
     );

@@ -89,6 +89,7 @@
     <script type='text/javascript' src='js/jquery.js'></script>
     <script type='text/javascript' src='bootstrap/bootstrap.min.js'></script>
     <script type='text/javascript'>
+      //fade in container and navbar on page load
       setTimeout(() => document.querySelector(".navbar").classList.remove("hide"), 1500);
       setTimeout(() => document.querySelector("#custom-container").classList.remove("hide"), 500);
     </script>

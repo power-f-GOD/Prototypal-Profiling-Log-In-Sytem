@@ -7,7 +7,7 @@
 class Utils
 {
   //shows feedback (errors, warnings or successes) on user form inputs and request statuses
-  static showInputFeedback(caller, type, feedbackText, height, callerParent, feedbackTitle)
+  static displayInputFeedback(caller, type, feedbackText, height, callerParent, feedbackTitle)
   {
     height = height ? height : "40px"; //set height for input feedback or request status feedback
 
@@ -65,28 +65,28 @@ class Utils
 
 
   //changes feedback type (CSS style) e.g. from error to warning or to success and vice versa, if there exists a feedback element to avoid creating duplicate feedback elements
-  static changeFeedbackType(caller, type, feedbackText, parent, feedbackTitle)
+  static changeFeedbackType(caller, type, feedbackText, callerParent, feedbackTitle)
   {
-    parent = parent ? parent : caller.parentNode;
+    callerParent = callerParent ? callerParent : caller.parentNode;
 
-    if (parent.querySelector(".feedback-wrapper"))
-      parent.querySelector(".feedback").className = `feedback js--feedback ${type}`,
-      parent.querySelector(".feedback").innerHTML = `<div>${feedbackText}</div>`;
+    if (callerParent.querySelector(".feedback-wrapper"))
+      callerParent.querySelector(".feedback").className = `feedback js--feedback ${type}`,
+      callerParent.querySelector(".feedback").innerHTML = `<div>${feedbackText}</div>`;
   }
 
 
 
 
 
-  //similar to showInputFeedback only that it checks if there be any feedback element and shows or changes accordingly to avoid adding (invisible) duplicate feedbacks to DOM and so scroll_page_to() function can function properly and as expected
-  static callInputFeedback(caller, type, feedbackText, parent, feedbackTitle)
+  //similar to displayInputFeedback only that it checks if there be any feedback element and shows or changes accordingly to avoid adding (invisible) duplicate feedbacks to DOM and so scrollPageTo() function can function properly and as expected
+  static callInputFeedback(caller, type, feedbackText, callerParent, feedbackTitle)
   {
-    parent = parent ? parent : caller.parentNode;
+    callerParent = callerParent ? callerParent : caller.parentNode;
 
-    if (parent && parent.querySelector(".feedback"))
+    if (callerParent && callerParent.querySelector(".feedback"))
       this.changeFeedbackType(caller, type, feedbackText, feedbackTitle);
     else
-      this.showInputFeedback(caller, type, feedbackText, "", parent, feedbackTitle);
+      this.displayInputFeedback(caller, type, feedbackText, "", callerParent, feedbackTitle);
   }
 
 
@@ -146,9 +146,9 @@ class Utils
 
 
   //scrolls page to position
-  static scroll_page_to(element, position)
+  static scrollPageTo(element, position)
   {
-    let start = undefined;
+    let start;
 
     if (element.scrollTop > position)
       start = setInterval(() => 
@@ -214,12 +214,14 @@ class Utils
   //changes history state onclick of browser refresh, back or forward buttons
   static changeHistoryState(responseText, title, url)
   {
+    //main_url: remove search part of url
     let main_url = `${url.slice(0, /\?/.test(url) ? url.indexOf('?') : url.length)}`,
         test_url = new RegExp(main_url);
         
     Q("#custom-container").innerHTML = responseText;
     document.title = title;
     
+    //if url is current url replace state to avoid duplicate contents in history.state
     if (test_url.test(window.location.pathname))
       history.replaceState(
       {
@@ -263,19 +265,19 @@ class Utils
           setTimeout(() => 
           {
             if (url.match("/signup"))
-              Utils.changeHistoryState(responseText, "Sign Up - G-TEC", "signup");
+              Utils.changeHistoryState(responseText, "Sign Up - G-TECHLY", "signup");
             else if (url.match("/index"))
-              Utils.changeHistoryState(responseText, "Get Started - G-TEC", "index");
+              Utils.changeHistoryState(responseText, "Get Started - G-TECHLY", "index");
             else if (url.match("/profile"))
-              Utils.changeHistoryState(responseText, "Profile - G-TEC", `profile?user=${USER}&u_id=${ID}`);
+              Utils.changeHistoryState(responseText, "Profile - G-TECHLY", `profile?user=${USER}&u_id=${ID}`);
             else if (url.match("/signin"))
-              Utils.changeHistoryState(responseText, "Sign In - G-TEC", `signin`);
+              Utils.changeHistoryState(responseText, "Sign In - G-TECHLY", `signin`);
             else if (url.match('/home'))
-              Utils.changeHistoryState(responseText, "Home - G-TEC", `home?user=${USER}&u_id=${ID}`);
+              Utils.changeHistoryState(responseText, "Home - G-TECHLY", `home?user=${USER}&u_id=${ID}`);
             else if (url.match('/iforgot'))
-              Utils.changeHistoryState(responseText, "iForgot Password - G-TEC", `iforgot`);
+              Utils.changeHistoryState(responseText, "iForgot Password - G-TECHLY", `iforgot`);
             else if (url.match('/reset'))
-              Utils.changeHistoryState(responseText, "Reset Password - G-TEC", `reset`);
+              Utils.changeHistoryState(responseText, "Reset Password - G-TECHLY", `reset`);
 
             Q("#custom-container").className = "show";
           }, 200);
@@ -293,10 +295,10 @@ class Utils
 
 
 
-  //POSTs user data to server
+  //POSTs user data to server 
   static POST(data, url)
   {
-    //POST returns a Promise object
+    //return a Promise
     return new Promise(function(resolve, reject) 
     {
       let xhttp = new XMLHttpRequest();
@@ -311,7 +313,7 @@ class Utils
       xhttp.onerror = () => reject("⚠ Network Error!");
 
       xhttp.open("POST", url, true);
-      // xhttp.setRequestHeader("Content-type", "multipart/form-data");
+      // xhttp.setRequestHeader("Content-type", "multipart/form-data"); 
       xhttp.send(data);
     });
   }
@@ -323,7 +325,7 @@ class Utils
   //GETs data from server
   static GET(url)
   {
-    //GET returns a Promise object
+    //return a Promise
     return new Promise(function (resolve, reject)
     {
       let xhttp = new XMLHttpRequest();

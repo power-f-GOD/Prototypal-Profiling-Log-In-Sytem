@@ -61,6 +61,7 @@
         {
           //send mail
           Utils::Mailer($to, $subject, $message, $firstname);
+          
           //send successful response to client
           Utils::appendJSONResponse("send-link-button", "", $success, "Confirmation link has just been sent to your email. Tap the link to reset your password.<br /><br /> Thank you.<br /><br /><br /><b>― G-TECHLY Team</b>", false);
         } 

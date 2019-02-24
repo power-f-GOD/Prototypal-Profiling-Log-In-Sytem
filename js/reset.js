@@ -116,21 +116,21 @@ function loadResetPageScript()
           {
             setTimeout(() => 
             {
-              Utils.showInputFeedback(caller, "success", success_message, '', '', '✔ Password Reset!');
+              Utils.displayInputFeedback(caller, "success", success_message, '', '', '✔ Password Reset!');
               Q("#reset-password-form").reset();
 
               for (let i = 0; i < QAll(".required").length; i++)
                 QAll(".required")[i].style.borderLeft = "5px solid red";
 
               Q("#confirm-password").disabled = true;
-              Utils.scroll_page_to(Q("body"), Q(".signup-status-feedback-wrapper").offsetTop - 250);
+              Utils.scrollPageTo(Q("body"), Q(".signup-status-feedback-wrapper").offsetTop - 250);
             }, 350);
           }
           //scroll form to first input that has feedback type "error" or "warning" that should be attended to, filled or filled correctly
           else if (Q(".error"))
-            Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250); 
+            Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q(".processing"))
-            Utils.scroll_page_to(Q("body"), Q(".processing").offsetTop - 250);
+            Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
         
           caller.disabled = false;
           caller.innerHTML = "Reset Password ↻";
@@ -147,10 +147,10 @@ function loadResetPageScript()
       {
         setTimeout(() =>
         {
-          Utils.showInputFeedback(caller, "error", `Something went wrong while trying to reset your password. Kindly review your network settings and ensure you are connected to the internet then try resetting your password again.`);
+          Utils.displayInputFeedback(caller, "error", `Something went wrong while trying to reset your password. Kindly review your network settings and ensure you are connected to the internet then try resetting your password again.`);
           caller.disabled = false;
           caller.innerHTML = "Reset Password ↻";
-          Utils.scroll_page_to(Q("body"), Q(".error").offsetTop - 250);
+          Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250);
         }, 500);
       }
     );
