@@ -26,6 +26,9 @@
   {
     global $user_index, $mysql;
     $last_modified_date = date("Y-m-d H:i:s");
+
+    if ($column == '_password')
+      $data = password_hash($data, PASSWORD_BCRYPT);
     
     $updated = $mysql->query("UPDATE _users SET $column = '$data', _last_modified_date = '$last_modified_date' WHERE _id = '$user_id';");
 
@@ -52,7 +55,7 @@
     //if form is submitted, proceed
     if (isset($_POST["submit"]))
     {
-      if ($form_is_validated && isset($_POST["current-password"]))
+      if ($form_is_validated && isset($_POST["current-password"]) && isset($_SESSION["u_$user_index"]))
       {
         $user_id = $_SESSION["u_$user_index"]["id"];
         $current_password = $_POST["current-password"];
@@ -124,6 +127,8 @@
         }
         else Utils::appendJSONResponse("current-password", $user_id, $error, "✘ Sorry, couldn't save profile edit because you entered an incorrect current password.", false);
       }
+      else if (!isset($_SESSION["u_$user_index"]))
+        Utils::appendJSONResponse("current-password", '', $error, "✘ Sorry, couldn't save profile edit because either your account no longer exists or you are not signed in.", false);
       
       $JSON_responses = (object) $JSON_responses; //convert $JSON_responses array to object before sending to client side
       echo json_encode($JSON_responses); //send JSON stringified object of response objects

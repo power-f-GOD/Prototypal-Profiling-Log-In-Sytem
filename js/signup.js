@@ -140,10 +140,11 @@ function loadSignupPageScript()
     Utils.hideAllFeedbacks();
 
     let caller = this,
-        formData = new FormData(Q("#signup-form"));
-    
+        formData = new FormData(Q("#signup-form")),
+        dateTime = Utils.getDateTime(); 
     
     formData.append(this.name, "submit"); //append submit button to be used for processing FormData on server
+    formData.append('date-time', dateTime);
     this.disabled = true;
     e.preventDefault(); //prevent page from reloading on submit button click
     current_loader = loader_sm.replace("type", l_arrow);
@@ -156,7 +157,7 @@ function loadSignupPageScript()
       function(responseText)
       {
         setTimeout(() => 
-        {console.log(responseText)
+        {
           //responseText is a JSON stringified object of objects sent from the server
           let responses = "", response,
               virtual_caller = caller,

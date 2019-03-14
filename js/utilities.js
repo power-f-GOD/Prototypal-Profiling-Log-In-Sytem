@@ -121,6 +121,10 @@ class Utils
           Q(`.profile-detail-value-${prop}`).innerHTML = response.value;
         else if (Q(`.profile-${prop}`)) //"prop" expected to be DATE or DATETIME
           Q(`.profile-${prop}`).innerHTML = response.value;
+        
+        //for home page greeting firstname
+        if (prop == 'firstname' && Q('.greeting-firstname'))
+          Q('.greeting-firstname').innerHTML = response.value;
       }
     }
   }
@@ -139,6 +143,59 @@ class Utils
           Utils.hideInputFeedback(elem.parentNode);
         else
           Utils.hideInputFeedback(elem);
+  }
+
+
+
+
+ 
+  static displayModal(action)
+  {
+    if (typeof action != 'object')
+      return;
+    
+    Q('.action-title').innerHTML = action.title;
+    Q('.action-message').innerHTML = action.message;
+    Q('.action-buttons-wrapper').style.display = action.buttons ? 'flex' : 'none';
+    
+    if (action.defaultAction)
+      if (Q('.default-action-handler'))
+      {
+        let hideModal = () => Q('.action-bg-overlay').classList.add('hide');
+        
+        Q('.default-action-handler').onclick = hideModal;
+        
+        Q('.action-bg-overlay').onclick = function(e) 
+        { if (e.target == this) hideModal(); };
+      }
+
+    Q('.confirm-yes-button').onclick = () =>
+    {
+      if (typeof action.takeAction == 'function')
+        action.takeAction();
+    };
+
+    Q('.confirm-no-button').onclick = () => Q('.action-bg-overlay').classList.add('hide');
+
+    setTimeout(() => Q('.action-bg-overlay').classList.remove('hide'), 100);
+  }
+
+
+
+
+
+  static getDateTime()
+  {
+    let date = new Date(),
+        yr = date.getFullYear(),
+        mth = date.getMonth() + 1,
+        dy = date.getDate(),
+        hr = date.getHours(),
+        min = date.getMinutes(),
+        sec = date.getSeconds(),
+        dateTime = `${yr}:${mth}:${dy} ${hr}:${min}:${sec}`;
+
+    return dateTime;
   }
 
 
@@ -237,6 +294,11 @@ class Utils
         "url": url
       }, title, `/g-techly/${url}`);
     
+    if (location.pathname.match(/\/index|\/$|\/home/))
+      Q('.header-icon').style.opacity = '0.15';
+    else
+      Q('.header-icon').style.opacity = '1';
+    
     this.loadCurrentPageScript(main_url);
   }
 
@@ -270,6 +332,8 @@ class Utils
               Utils.changeHistoryState(responseText, "Get Started - G-TECHLY", "index");
             else if (url.match("/profile"))
               Utils.changeHistoryState(responseText, "Profile - G-TECHLY", `profile?user=${USER}&u_id=${ID}`);
+            else if (url.match("/users"))
+              Utils.changeHistoryState(responseText, "Users - G-TECHLY", `users?user=${USER}&u_id=${ID}`);
             else if (url.match("/signin"))
               Utils.changeHistoryState(responseText, "Sign In - G-TECHLY", `signin`);
             else if (url.match('/home'))
@@ -287,6 +351,7 @@ class Utils
       function(xhttp)
       {
         setTimeout(() => Q("#custom-container").innerHTML = request_status_info.replace("{status}", xhttp["status"]).replace("{status_text}", xhttp["status_text"]), 300);
+        Q('.header-icon').style.opacity = '1';
       }
     );
   };

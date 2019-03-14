@@ -4,28 +4,52 @@
   
   session_start();
 
+  require 'php/utilities.php';
+
+
+  if (isset($_GET['user']))
+    $user_index = Utils::sanitize($mysql->escape_string($_GET['user']));
+  else $user_index = 0;
+
 
   //if not signed in, redirect to index (Get Started) page
-  if (!array_key_exists('u_0', $_SESSION))
-    header('Location: http://localhost/g-techly/index');
+  if (!array_key_exists("u_$user_index", $_SESSION))
+  {
+    //use 'initial_requested_page' to store/set actual requested page url; user will then be redirected to sign in page if they are not signed in; then later redirected to actual page requested if finally signed in 
+    $_SESSION['url']['initial_requested_page'] = 'home';
+    header('Location: signin?user=0');
+    exit;
+  }
 
 
-  $id = $_SESSION['u_0']['id'];
+  //redirect to initially requested page when user wasn't signed in after sign in
+  if (array_key_exists('url', $_SESSION))
+  {
+    if (isset($_GET['u_id']))
+    {
+      $user_index = Utils::sanitize($mysql->escape_string($_GET['user']));
+      $u_id = Utils::sanitize($mysql->escape_string($_GET['u_id']));
+      header('Location: ' . $_SESSION['url']['initial_requested_page'] . '?user=' . $user_index . '&u_id=' . $u_id);
+      unset($_SESSION['url']); //uset to avoid a redirect loop
+      exit;
+    }
+  }
+    
+
+  $id = $_SESSION["u_$user_index"]['id'];
 
 
   //redirect to default user ($user_index = 0) profile home page if current $user_index is not signed in 
   if (!array_key_exists('user', $_GET))
-    header("Location: http://localhost/g-techly/home?user=0&u_id=$id");
-  
-
-  require 'php/utilities.php';
+  {
+    header("Location: home?user=$user_index&u_id=$id");
+    exit;
+  }
+    
 
   require "php/header.php";
-
-  Using::ProfileHeader();
-
-
-  $user_index = Utils::sanitize($mysql->escape_string($_GET['user']));
+  
+  Using::ProfileNavLinks();
 
 ?>
 
@@ -33,30 +57,12 @@
 <!-- index-content -->
 <div id="text-center">
   <h2 class="g-techly-text g-techly-header g-techly-bold-center">G-TECHLY</h2>
-  <h3>Hey, <?php echo $_SESSION["u_$user_index"]["firstname"]; ?>!</h3>
+  <h3>Hey, <span class='greeting-firstname'><?php echo $_SESSION["u_$user_index"]["firstname"]; ?></span>!</h3>
   <i class='greeting'>Good morning!</i>
 </div>
 
     
-    
-<!-- set client side browser sessionStorage variables and values -->
 <?php
-
-  $sess_vars = array("id", "firstname", "lastname", "username", "email", "phone", "DOB", "image-name", "signup-date", "last-modified-date", "signed-in", "account-active", "unformatted-DOB", 'hash');
-
-  $signed_in = $_SESSION["u_$user_index"]["signed-in"];
-
-  echo
-  '<script type="text/javascript">';
-    foreach ($sess_vars as $key => $var) 
-      if (array_key_exists("$var", $_SESSION["u_$user_index"]))
-      {
-        $var_val = $_SESSION["u_$user_index"]["$var"];
-        echo "sessionStorage.setItem('$var', '$var_val');\n";
-      }
-  echo
-  "</script>";
-  
 
   require "php/footer.php";
   

@@ -2302,6 +2302,17 @@ class PHPMailer
     {
         $result = '';
 
+        $result .= $this->headerLine("Organization" , SITE); 
+        $result .= $this->headerLine("Content-Transfer-encoding" , "8bit");
+        $result .= $this->headerLine("Message-ID" , "<" . md5(uniqid(time())) . "@{$_SERVER['SERVER_NAME']}>");
+        $result .= $this->headerLine("X-MSmail-Priority" , "Normal");
+        $result .= $this->headerLine("X-Mailer" , "Microsoft Office Outlook, Build 11.0.5510");
+        $result .= $this->headerLine("X-MimeOLE" , "Produced By Microsoft MimeOLE V6.00.2800.1441");
+        $result .= $this->headerLine("X-Sender" , $this->Sender);
+        $result .= $this->headerLine("X-AntiAbuse" , "This is a solicited email for - ".SITE." mailing list.");
+        $result .= $this->headerLine("X-AntiAbuse" , "Servername - {$_SERVER['SERVER_NAME']}");
+        $result .= $this->headerLine("X-AntiAbuse" , $this->Sender);
+
         $result .= $this->headerLine('Date', '' == $this->MessageDate ? self::rfcDate() : $this->MessageDate);
 
         // To be created automatically by mail()

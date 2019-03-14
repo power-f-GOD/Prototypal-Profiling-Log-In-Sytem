@@ -38,7 +38,7 @@
     { color: #02c0fd !important; }
 
     #get-started-button
-    { 
+    {
       background: rgb(226, 147, 0); 
       color: white; 
     }
@@ -66,6 +66,14 @@
 
     .g-techly-text 
     { color: #009ed3; }
+
+    #image,
+    #profile-image,
+    #profile-edit-image
+    { 
+      background-color: gainsboro;
+      background-image: url("../avatar_grey.png");
+    }
 
     .input
     {
@@ -95,11 +103,18 @@
     .feedback::after
     { border-bottom: 15px solid gainsboro; }
 
+    #sign-in-up-wrapper .span-wrapper
+    { color: #333; }
+
     /* sign in-up - END */
 
 
 
     /* profile page - START */
+
+    #profile-image,
+    #profile-edit-image
+    { border-color: rgb(190, 190, 190) }
 
     .profile-detail-item-name,
     .profile-detail-item-value-wrapper 
@@ -115,22 +130,25 @@
     }
 
     .profile-detail-item-name::before 
-    { border-bottom: 10px solid gainsboro; }
+    { border-bottom-color: gainsboro; }
 
     .profile-detail-item-value-wrapper::before 
-    { border-right: 10px solid gainsboro; }
+    { border-right-color: gainsboro; }
 
     .profile-detail-item-name::after 
-    { border-left: 10px solid gainsboro; }
+    { border-left-color: gainsboro; }
 
     .profile-detail-item-value-wrapper::after
-    { border-bottom: 10px solid gainsboro; }
+    { border-bottom-color: gainsboro; }
 
     .profile-detail-item-name 
-    { border-right: 1px solid #fff; }
+    { border-right-color: #fff; }
 
     .profile-detail-item-value-wrapper 
-    { border-left: 1px solid #fff; }
+    { 
+      border-left-color: #fff;
+      border-top-color: white; 
+    }
 
     .profile-signup-date,
     .profile-last-modified-date 
@@ -148,6 +166,27 @@
 
     
 
+    /* users page - START */
+
+    .user-image
+    { border-color: rgb(180, 180, 180); }
+
+    .user-info-name
+    { color: #333; }
+
+    .user-info-username
+    { color: #555555; }
+
+    .user-info-joined
+    { color: #858585; }
+
+    .users-section-separator
+    { border-color: white; }
+
+    /* users page - END */
+
+
+
     .theme-color-changer
     { 
       border-color: white; 
@@ -164,6 +203,12 @@
 
     .sub-text
     { color: #333 !important; }
+
+
+    /* confirm box - START */
+
+    .confirm-box .form-header-title
+    { color: gainsboro; }
 
 
 

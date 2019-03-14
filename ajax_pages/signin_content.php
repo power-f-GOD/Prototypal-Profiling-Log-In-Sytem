@@ -8,7 +8,7 @@
 
 <div class="content">
   <!-- form header title -->
-  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G-TECHLY</span> - Sign In</h4>
+  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G</span> - Sign In</h4>
   <form id="login-form" method="POST" enctype="multipart/form-data">
     <!-- email -->
     <label for="login-name">

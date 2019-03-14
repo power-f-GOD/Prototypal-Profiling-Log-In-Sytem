@@ -1,0 +1,72 @@
+    
+    .users-content
+    {
+      width: 100%;
+      max-width: 575px;
+      padding: 0;
+      overflow: auto;
+    }
+
+    .users-content-sub-wrapper
+    { 
+      min-width: 300px;
+      padding: 45px 5.75%;
+    }
+
+    .form-header-title
+    { margin-bottom: 25px; }
+    
+    .user-container
+    { padding: 0 10px; }
+
+    .user-image-wrapper
+    {
+      margin: 0;
+      margin-right: 15px;
+      width: 110px;
+      height: 110px;
+    }
+
+    .user-image
+    {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid gainsboro;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      /* background-image: url("../avatar_blue.png"); */
+      transition: background 0.3s;
+    }
+
+    .user-info-wrapper
+    {
+      max-width: auto;
+      height: inherit;
+    }
+
+    .user-info-name
+    {
+      margin: 0;
+      margin-top: 5px;
+      color: gainsboro;
+      font-weight: 600;
+    }
+
+    .user-info-username
+    { color: #a5a5a5; }
+
+    .user-info-joined
+    {
+      color: #858585;
+      font-style: italic;
+      font-size: 90%;
+    }
+
+    .users-section-separator
+    {
+      border-color: #0f699f;
+      border-width: 2px;
+      margin: 15px 0;
+    }

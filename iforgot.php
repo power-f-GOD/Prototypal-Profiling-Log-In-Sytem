@@ -13,20 +13,20 @@
     if (array_key_exists('u_0', $_SESSION))
     {
       $id = $_SESSION["u_0"]['id'];
-      header("Location: http://localhost/g-techly/profile?user=0&u_id=$id");
+      header("Location: profile?user=0&u_id=$id");
     }
  
 
   require "php/header.php";
 
-  Using::IndexHeader();
+  Using::IndexNavLinks();
 
 ?>
 
 
 <div class="content">
   <!-- form header title -->
-  <h5 class="form-header-title"><span class="g-techly-text g-techly-icon">G-TECHLY</span> - iForgot Password</h5>
+  <h5 class="form-header-title"><span class="g-techly-text g-techly-icon">G</span> - iForgot Password</h5>
   <form id="iforgot-link-form" method="POST" enctype="multipart/form-data">
     <!-- email -->
     <label for="link-email">
@@ -50,5 +50,7 @@
 
 
 <?php
+
   require "php/footer.php";
+
 ?>

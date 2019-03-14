@@ -89,8 +89,8 @@ function loadSigninPageScript()
                     else
                       sessionStorage.setItem(prop, response.value);
                   }
-  
-                  window.location = `http://localhost/g-techly/home?user=${user}&u_id=${id}`;
+
+                  window.location = `home?user=${user}&u_id=${id}`;
                 }, 1700);
               }
           }

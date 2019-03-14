@@ -3,13 +3,13 @@
     {
       width: 365px;
       height: auto;
-      box-shadow: 0 30px 130px 15px #000, 0 -3px 10px #001a2b inset;
+      box-shadow: 0 30px 130px 15px #000;
       padding: 34px;
       background: #004170;
       max-width: 100%;
       transition: 0.3s;
       align-self: center;
-      margin: 70px 0;
+      margin: 80px 0;
       text-align: left;
       color: lightgrey;
       /* border: 1px solid yellow; */
@@ -21,6 +21,9 @@
       color: lightgrey;
       padding: 10px 0;
     }
+
+    .content .form-header-title .g-techly-icon
+    { opacity: 0.7; }
 
 
 
@@ -81,11 +84,12 @@
     }
 
     #image,
+    #profile-image,
     #profile-edit-image
     {
       height: 160px;
       width: 160px;
-      background: gainsboro;
+      background-color: #004070;
       margin: auto;
       border-radius: 50%;
       border: 2px solid gainsboro;
@@ -123,7 +127,7 @@
     { 
       border: none; 
       font-size: 15px;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-family: 'Trebuchet MS', 'PT-Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       transition: 0.3s;
       line-height: 100% !important;
     }
@@ -271,6 +275,7 @@
       padding: 6px 0;
       font-size: 14px;
       height: auto;
+      color: gainsboro;
       /* border: 1px solid red; */
     }
 

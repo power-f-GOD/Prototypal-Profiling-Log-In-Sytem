@@ -7,6 +7,69 @@
 
 function loadProfilePageScript()
 {
+  //a somewhat measure to check if user is signed in or not. If signed in run script else exit
+  if (!Q('#profile-delete-account-button'))
+    return;
+
+
+
+
+
+  Q('#profile-delete-account-button').onclick = function()
+  {
+    let delButton = this,
+        current_loader = loader_sm.replace("type", l_arrow);
+    
+    Utils.displayModal(
+    {
+      title: '⚠ Delete Account',
+      message: 'Are you sure you want to permanently delete your account?',
+      buttons: true,
+      takeAction: () =>
+      {
+        delButton.disabled = true;
+        delButton.innerHTML = `${current_loader} Deleting account...`;
+        Utils.GET(`./php/delete_account.php?user=${USER}&u_id=${ID}`).then
+        (
+          function(responseText) 
+          {
+            let response = JSON.parse(responseText);
+
+            setTimeout(() => 
+            {
+              Utils.displayModal(
+              {
+                title: JSON.parse(response['delete-account']).value,
+                message: JSON.parse(response['delete-account']).message,
+                buttons: false,
+              });
+              delButton.disabled = false;
+              delButton.innerHTML = '✘ Delete Account';
+            }, 300);
+          },
+          function(xhttp)
+          {
+            setTimeout(() => 
+            {
+              Utils.displayModal(
+              {
+                title: xhttp['status'],
+                message: xhttp['status_text'],
+                buttons: false,
+              });
+              delButton.disabled = false;
+              delButton.innerHTML = '✘ Delete Account';
+            }, 300);
+          }
+        );
+      }
+    });
+  }
+
+
+
+
+
   //if account is not yet active (verified) prevent function execution to avoid 'null' errors
   if (sessionStorage.getItem('account-active') != 1)
     return;
@@ -27,7 +90,9 @@ function loadProfilePageScript()
   //input file image onchange handler
   Q("#profile-edit-image-file").onchange = function()
   {
-    currentPassword.parentNode.style.background = '#700';
+    if (!currentPassword.value)
+      currentPassword.parentNode.style.background = '#700';
+
     Utils.hideAllFeedbacks();
 
     if (this.parentNode.parentNode.querySelector(".feedback-wrapper"))
@@ -60,7 +125,7 @@ function loadProfilePageScript()
       Utils.hideAllFeedbacks();
 
       if (!currentPassword.value)
-        currentPassword.parentNode.style.background = '#600';
+        currentPassword.parentNode.style.background = '#700';
     });
 
     //add event listener for when "Enter" key is pressed: Triggers "Save" function
@@ -72,7 +137,7 @@ function loadProfilePageScript()
       {
         if (currentPassword.disabled)
           Q("#profile-detail-edit-button").click();
-        else if (!currentPassword.value)
+        else if (!currentPassword.value || currentPassword.value.length < 8)
         {
           Utils.callInputFeedback(currentPassword.parentNode, 'processing', '⚠ Enter your current password to save changes.', '', '');
           Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
@@ -148,8 +213,9 @@ function loadProfilePageScript()
   {
     e.preventDefault();
 
-    let editFormData = new FormData();
-    let profile_edited = false;
+    let editFormData = new FormData(),
+        profile_edited = false,
+        dateTime = Utils.getDateTime();
 
     //if input value is not equal to current profile value, append input value to form data i.e. a change has been made and needs to be sent to the server
     for (let i = 0; i < allProfileInputs.length; i++)
@@ -196,6 +262,7 @@ function loadProfilePageScript()
     editFormData.append("login-id", sessionStorage.getItem("email"));
     editFormData.append(currentPassword.name, currentPassword.value); //append current password to enable saving on server
     editFormData.append(this.name, "submit"); //append submit button to be used for processing FormData on server
+    editFormData.append('date-time', dateTime);
     disable_save_button();
     saveButton.innerHTML = `${loader_sm.replace("type", l_arrow)} Saving...`;
 
@@ -220,7 +287,8 @@ function loadProfilePageScript()
                 Utils.changeFeedbackType(Q(`.profile-detail-input-${prop}`).parentNode, response.type, response.message);
               else
                 Utils.displayInputFeedback(Q(`.profile-detail-input-${prop}`).parentNode, response.type, response.message);
-            if (prop == "image-name")
+
+            if (/image\-name|image\-file/.test(prop))
               Utils.callInputFeedback(Q("#profile-edit-image-label"), response.type, response.message, Q("#profile-edit-image-label").parentNode);
           }
 
@@ -233,11 +301,13 @@ function loadProfilePageScript()
             Utils.scrollPageTo(Q("body"), Q(".error").offsetTop - 250); 
           else if (Q(".processing"))
             Utils.scrollPageTo(Q("body"), Q(".processing").offsetTop - 250);
-          //else no error occurred and edited profile data have been saved, hence, update client side profile data
           else if (Q(".success"))
           {
             Utils.updateClientSideProfile(responses);
             Utils.scrollPageTo(Q("body"), Q(".success").offsetTop - 250);
+            changePassword.value = '';
+            confirmChangedPassword.value = '';
+            confirmChangedPassword.disabled = true;
           }
             
           saveButton.innerHTML = "✔ Save";
@@ -277,7 +347,7 @@ function loadProfilePageScript()
         allProfileValues[i].style.display = "none";
 
         if (allProfileInputs[i].name == "DOB")
-          allProfileInputs[i].value = sessionStorage.getItem("unformatted-DOB");
+          allProfileInputs[i].value = sessionStorage.getItem("unformatted-DOB") ? sessionStorage.getItem("unformatted-DOB") : '―';
         else
           allProfileInputs[i].value = sessionStorage.getItem(allProfileInputs[i].name);
       }

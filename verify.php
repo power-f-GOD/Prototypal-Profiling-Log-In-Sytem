@@ -11,17 +11,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Get Started - G-TECHLY</title>
+    <title>Account Activated - G-TECHLY</title>
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
     <meta id='metallic' name='theme-color' content='#282828' />
-    
     <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' /> -->
     <link rel='stylesheet' type='text/css' href='bootstrap/bootstrap.min.css' />
     <link rel='stylesheet' type='text/css' href='css/main.css' />
     <link rel='stylesheet' type='text/css' href='css/sign_in_up.css' />
     <link rel='stylesheet' type='text/css' href='css/profile.css' />
   </head>
+
   <body>
     <!-- nav menu -->
     <header class='fixed-top'>
@@ -52,7 +52,7 @@
 
   if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['hash']) && !empty($_GET['hash']))
   {
-    //sanitize params to avoid security issues
+    //sanitize params to avoid security issues and vulnerabilities
     $user_index = Utils::sanitize($mysql->escape_string($_GET['user']));
     $email = Utils::sanitize($mysql->escape_string($_GET['email']));
     $hash = Utils::sanitize($mysql->escape_string($_GET['hash']));
@@ -64,9 +64,9 @@
       $firstname = ($account_inactive->fetch_assoc())['_firstname'];
       $mysql->query("UPDATE _users SET _account_active = 1 WHERE _email = '$email' AND _hash = '$hash';");
 
-      echo message('success', '✔ Account Activated!', "Thank you, <b>$firstname</b>. Your account has been activated!<br /><a href='signin?user=$user_index' style='color: blue;'>Sign in</a> to continue.<br /><br /><br /><b>― G-TECHLY Team</b>");
+      echo message('success', '✔ Account Activated!', "Thank you, <b>$firstname</b>. Your account has been activated!<br />Please, <a href='signin?user=$user_index' style='color: blue;'>sign in</a> to continue.<br /><br /><br /><b>― G-TECHLY Team</b>");
 
-      //update account-active session variable if exists
+      //update account-active SESSION variable if exists
       if (array_key_exists("u_$user_index", $_SESSION))
       {
         $_SESSION["u_$user_index"]['account-active'] = 1;

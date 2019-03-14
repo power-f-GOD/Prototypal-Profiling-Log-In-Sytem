@@ -7,13 +7,13 @@
   if (array_key_exists('u_0', $_SESSION))
   {
     $id = $_SESSION['u_0']['id'];
-    header("Location: http://localhost/g-techly/home?user=0&u_id=$id");
+    header("Location: home?user=0&u_id=$id");
   }
 
 
   require "php/header.php";
 
-  Using::IndexHeader();
+  Using::IndexNavLinks();
   
 ?>
 

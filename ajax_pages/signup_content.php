@@ -8,7 +8,7 @@
 <!-- sign up form -->
 <div class="content">
   <!-- form header title -->
-  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G-TECHLY</span> - Sign Up</h4>
+  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G</span> - Sign Up</h4>
   <form id="signup-form" method="POST" enctype="multipart/form-data">
     <!-- image / avatar -->
     <div id="image-container">
@@ -58,8 +58,15 @@
     </label>
     <!-- sign up (submit) -->
     <div id="sign-in-up-wrapper">
-      <span class="span-wrapper"><button id="submit" class="button" type="submit" name="submit">Sign Up &#11014;</button></span>
-      <span class="span-wrapper">Already have an account? <a href="javascript:void(0)" id="signup-page-signin-link" class="">Sign in here</a></span>
+      <span class="span-wrapper">
+        <button id="submit" class="button" type="submit" name="submit">Sign Up &#11014;</button>
+      </span>
+      <span class="span-wrapper sub-text" style='color: #888 !important; font-style: italic;'>
+        <u>NB:</u> A verification link will be sent to the email you provide to enable you activate your account.
+      </span>
+      <span class="span-wrapper">
+        Already have an account? <a href="javascript:void(0)" id="signup-page-signin-link" class="">Sign in here</a>
+      </span>
     </div>
   </form>
 </div>

@@ -7,12 +7,12 @@
 
   
   if (!isset($_GET['email']) || !isset($_GET['hash']))
-    header("Location: http://localhost/g-techly/signin?user=0");
+    header("Location: signin?user=0");
     
 
   require "php/header.php";
 
-  Using::IndexHeader();
+  Using::IndexNavLinks();
   
 ?>
 
@@ -20,7 +20,7 @@
 <!-- sign up form -->
 <div class="content">
   <!-- form header title -->
-  <h5 class="form-header-title"><span class="g-techly-text g-techly-icon">G-TECHLY</span> - Reset Password</h5>
+  <h5 class="form-header-title"><span class="g-techly-text g-techly-icon">G</span> - Reset Password</h5>
   <form id="reset-password-form" method="POST" enctype="multipart/form-data">
     <!-- new password -->
     <label for="password">

@@ -48,21 +48,9 @@
       width: auto;
       text-align: center;
     }
-
-    #profile-image
-    {
-      height: 160px;
-      width: 160px;
-      background: gainsboro;
-      margin: auto;
-      border-radius: 50%;
-      border: 2px solid gainsboro;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-image: url("../avatar_blue.png");
-      transition: background 0.3s;
-    }
+    
+    #profile-edit-image-label-container .feedback
+    { max-width: 385px; }
 
     .profile-detail-item-wrapper
     {
@@ -128,6 +116,7 @@
       justify-content: flex-start;
       text-align: left;
       border-left: 1px solid #0086b8;
+      border-top: none;
       padding-left: 10px;
       position: relative;
       flex-wrap: wrap;
@@ -241,11 +230,28 @@
       background: #012336;
     }
 
+    #profile-delete-account-button
+    {
+      height: 42px;
+      color: gainsboro;
+      background: rgb(225, 0, 0);
+      box-shadow: 0 10px 40px 5px black;
+      margin-top: 30px;
+      margin-bottom: 100px;
+    }
+
+    #profile-delete-account-button:hover
+    { background: rgb(196, 0, 0); }
+
+    #profile-delete-account-button:disabled:hover
+    { background: rgb(225, 0, 0); }
+
     .edit-mode-off:hover
-    { background: rgb(187, 125, 9) !important; }
+    { background: rgb(218, 143, 5) !important; }
 
     .edit-mode-on:hover
     { background: #777 !important; }
 
     #profile-detail-save-button:hover
     { background: rgb(0, 165, 0); }
+

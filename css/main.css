@@ -18,23 +18,8 @@
       background-position: center;
       display: flex;
       align-items: center;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+      font-family: 'Trebuchet MS', 'PT-Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
       /* border: 2px solid red; */
-    }
-
-    body::-webkit-scrollbar
-    { width: 10px; }
-
-    body::-webkit-scrollbar-track
-    {
-      border-radius: 10px;
-      background: #003350;
-    }
-
-    body::-webkit-scrollbar-thumb
-    {
-      background: lightgrey;
-      border-radius: 10px;
     }
 
     *
@@ -57,7 +42,7 @@
     input:disabled,
     button:disabled
     { 
-      opacity: 0.55;
+      opacity: 0.7;
       cursor: not-allowed;
       box-shadow: none;
     }
@@ -70,10 +55,7 @@
     }
 
     a
-    { 
-      padding: 2px 5px;
-      height: auto;
-      display: inline-block;
+    {
       color: orange;
       text-decoration: none;
       transition: 0.3s;
@@ -91,6 +73,7 @@
       height: auto;
       margin: auto;
       display: flex;
+      max-width: 1250px;
       justify-content: center;
       flex-direction: column;
       text-align: center;
@@ -111,8 +94,7 @@
     {
       height: 65px;
       width: 100%;
-      display: flex;
-      align-items: center !important;
+      box-shadow: 0 0 25px #000a12;
       position: fixed;
       top: 0;
       left: 0;
@@ -129,8 +111,8 @@
       margin: 0;
       align-items: center;
       padding: 0 18px;
+      max-width: 1250px;
       justify-content: space-between;
-      box-shadow: 0 0 25px #000a12;
     }
 
     nav h2
@@ -168,8 +150,12 @@
       background: #002b50;
       padding: 0 !important;
       border-radius: 50% !important;
-      height: 45px;
-      width: 45px;
+      height: 50px;
+      width: 50px;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       transition: 0.3s;
       background-position: center;
       background-size: cover;
@@ -179,16 +165,22 @@
     .navbar-toggler:hover
     { background-color: rgb(228, 148, 1) !important; }
 
-    .navbar-toggler-icon
+    .nav-toggler-strokes-wrapper
     {
-      display: inline-flex !important;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 24px;
-      font-family: none !important;
-      /* border: 1px solid red; */
+      display: inline-flex;
+      height: 20px;
+      width: 25px;
+      align-self: center;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+
+    .nav-toggler-strokes
+    {
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
     }
 
     .g-techly-text
@@ -233,9 +225,9 @@
 
     .footer-text
     {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: normal; 
-      opacity: 0.8;
+      opacity: 0.7;
       text-shadow: 1px 1px 1.5px black;
     }
 
@@ -314,22 +306,113 @@
     /* abstract - END */
 
 
-    .user-not-signed-in-bg-overlay
+
+    /* confirm action box - START */
+
+    .action-bg-overlay
     {
       background: rgba(0, 0, 0, 0.75);
       transition: 0.3s;
     }
 
+
+    .confirm-box
+    {
+      width: 370px;
+      max-width: 90%;
+      max-height: 95%;
+      padding: 25px;
+      line-height: 150%;
+      padding-top: 22px;
+      font-size: 15px;
+      color: gainsboro !important;
+      background: #353535;
+      overflow: auto;
+    }
+    
+    .confirm-box::-webkit-scrollbar
+    { width: 7px; }
+
+    .confirm-box::-webkit-scrollbar-track
+    {
+      border-radius: 7px;
+      background: transparent;
+    }
+
+    .confirm-box::-webkit-scrollbar-thumb
+    {
+      background: #555555;
+      border-radius: 7px;
+    }
+
+    .confirm-box .form-header-title
+    { 
+      font-size: 18px;
+      text-align: left;
+      padding: 5px 0;
+      margin: 0 0 10px 0;
+    }
+    
+    .confirm-box .g-techly-text
+    { 
+      font-size: 20px;
+      text-shadow: 0 0 8px #001820 !important; 
+    }
+
+    .confirm-box .action-message
+    { margin: 5px 0; }
+
+    .confirm-box .action-buttons-wrapper
+    { 
+      margin-top: 35px;
+      display: flex;
+    }
+
+    .confirm-yes-button,
+    .confirm-no-button
+    {
+      font-size: 14px;
+      min-width: 38%;
+      border: none;
+      padding: 9px 16px;
+      color: gainsboro;
+      margin-left: 5%;
+      box-shadow: 0 1px 3px black;
+      border-radius: 4px;
+    }
+
+    .confirm-yes-button:hover,
+    .confirm-no-button:hover
+    { box-shadow: 0 2px 12px black; }
+
+    .confirm-yes-button
+    { background: rgb(210, 0, 0); }
+
+    .confirm-yes-button:hover
+    { background: rgb(180, 0, 0); }
+
+    .confirm-no-button
+    { background: #007aa3; }
+
+    .confirm-no-button:hover
+    { background: #006283; }
+
+    /* confirm action box - END */
+
+
+
     .box-shadow
-    { box-shadow: 0 15px 50px 5px black; }
+    { box-shadow: 0 10px 70px 5px black; }
 
     .theme-color-changer
     {
-      height: 45px;
-      width: 45px;
+      height: 50px;
+      width: 50px;
+      background: url("../loaders/animated_loading.gif"); /* to enable GIF image be preloaded on page load so as to display on time when needed */
       background: #02bffd;
       color: white;
-      font-size: 28px;
+      font-size: 26px;
+      font-weight: bolder;
       border-radius: 50%;
       border: 2px solid white;
       padding-top: 0;
@@ -347,6 +430,7 @@
 
 
 
+
     @font-face 
     {
       font-family: 'Audiowide';
@@ -357,4 +441,16 @@
           url('../google_fonts/audiowide/audiowide-v5-latin-regular.woff') format('woff'), /* Modern Browsers */
           url('../google_fonts/audiowide/audiowide-v5-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
           url('../google_fonts/audiowide/audiowide-v5-latin-regular.svg#Audiowide') format('svg'); /* Legacy iOS */
+    }
+
+    @font-face 
+    {
+      font-family: 'PT-Sans';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../google_fonts/pt-sans/pt-sans-v8-latin-regular.eot'), /* IE9 Compat Modes */
+          url('../google_fonts/pt-sans/pt-sans-v8-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+          url('../google_fonts/pt-sans/pt-sans-v8-latin-regular.woff') format('woff'), /* Modern Browsers */
+          url('../google_fonts/pt-sans/pt-sans-v8-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+          url('../google_fonts/pt-sans/pt-sans-v8-latin-regular.svg') format('svg'); /* Legacy iOS */
     }

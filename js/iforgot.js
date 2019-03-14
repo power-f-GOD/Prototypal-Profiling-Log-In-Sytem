@@ -39,7 +39,7 @@ function loadiForgotPageScript()
     (
       //POST request resolved
       function(responseText)
-      {
+      {console.log(responseText)
         //responseText is a JSON stringified object of objects sent from the server
         setTimeout(() => 
         {
@@ -48,7 +48,7 @@ function loadiForgotPageScript()
               responses, response;
 
           responseText = responseText.slice(start, end + 1);
-
+          
           try 
           {
             responses = JSON.parse(responseText);
@@ -62,7 +62,8 @@ function loadiForgotPageScript()
                 let feedbackTitle = response.type == "success" ? "✔ Confirmation Link sent!" : "✘ Could not send Link!";
                 Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message, "", Q("#sign-in-up-wrapper"), feedbackTitle);
 
-                if (response.type == "success") Q("#iforgot-link-form").reset();
+                if (response.type == "success") 
+                  Q("#iforgot-link-form").reset();
               }
               else if (response.type == "error")
                 Utils.displayInputFeedback(Q(`#${response.name}`), response.type, response.message);

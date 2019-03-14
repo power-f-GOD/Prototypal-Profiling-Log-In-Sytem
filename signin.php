@@ -1,5 +1,5 @@
 
-<!-- Do not alter or tamper with classNames. Add your own custom classNames instead. -->
+<!-- Do not alter or tamper with classNames. -->
 
 <?php
 
@@ -8,25 +8,25 @@
   session_start();
 
 
-  //using 'user' URL parameter to allow multiple users have access to sign in page in case a user is already signed in
+  //using 'user' URL parameter to force/allow multiple users have access to sign in page in case a user is already signed in
   if (!array_key_exists('user', $_GET))
     if (array_key_exists('u_0', $_SESSION))
     {
       $id = $_SESSION["u_0"]['id'];
-      header("Location: http://localhost/g-techly/profile?user=0&u_id=$id");
+      header("Location: profile?user=0&u_id=$id");
     }
  
 
   require "php/header.php";
 
-  Using::IndexHeader();
+  Using::IndexNavLinks();
 
 ?>
 
 
 <div class="content">
   <!-- form header title -->
-  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G-TECHLY</span> - Sign In</h4>
+  <h4 class="form-header-title"><span class="g-techly-text g-techly-icon">G</span> - Sign In</h4>
   <form id="login-form" method="POST" enctype="multipart/form-data">
     <!-- email -->
     <label for="login-name">
@@ -36,7 +36,7 @@
     <label for="login-password">
       <input type="password" class="input" id="login-password" name="login-password" placeholder="&#128274; Password" title="Enter your password" />
     </label>
-    <!-- sign up (submit) -->
+    <!-- sign in (submit) -->
     <div id="sign-in-up-wrapper">
       <span class="span-wrapper">Forgot password? <a href="javascript:void(0)" id="reset-password" class="js--nav-link" data-href='ajax_pages/iforgot_content.php'>Reset</a></span>
       <span class="span-wrapper"><button id="signin-button" class="button" type="submit" name="signin-button">Sign In &#10152;</button></span>
@@ -52,5 +52,7 @@
 
 
 <?php
+
   require "php/footer.php";
+
 ?>
